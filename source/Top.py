@@ -165,7 +165,7 @@ def main():
     print ''
     
     # Push the log file to Git
-    g = git.cmd.Git('..')
+    g = git.cmd.Git('../')
     g.pull()
     g.add(pathLog)
     g.commit('Update log file: ' + pathInfo)
