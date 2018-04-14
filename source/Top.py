@@ -6,6 +6,7 @@ import Option
 import Log
 import getData
 import Quantize
+import git
 from tqdm import tqdm
 
 # for single GPU quanzation
@@ -33,7 +34,8 @@ def main():
   # get Option
   GPU = Option.GPU
   batchSize = Option.batchSize
-  pathLog = '../log/' + Option.Time + '(' + Option.Notes + ')' + '.txt'
+  pathInfo = Option.Time + '(' + Option.Notes + ')'
+  pathLog = '../log/' + pathInfo + '.txt'
   Log.Log(pathLog, 'w+', 1) # set log file
   print time.strftime('%Y-%m-%d %X', time.localtime()), '\n'
   print open('Option.py').read()
@@ -161,6 +163,13 @@ def main():
       print 'BEST',
 
     print ''
+    
+    # Push the log file to Git
+    g = git.cmd.Git('..')
+    g.pull()
+    g.add(pathLog)
+    g.commit('Update log file: ' + pathInfo)
+    g.push()
 
 
 if __name__ == '__main__':
